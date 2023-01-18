@@ -61,46 +61,56 @@ class MyHomePage extends StatelessWidget {
           title: const Text('My First exo SCUB'),
           backgroundColor: theme.colorScheme.primary,
         ),
-        body: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                    onPressed: () => appState.setMultiple(2),
-                    child: const Text("coefficient 2")),
-                const SizedBox(width: 5),
-                ElevatedButton(
-                    onPressed: () => appState.setMultiple(3),
-                    child: const Text("coefficient 3")),
-                const SizedBox(width: 5),
-                ElevatedButton(
-                    onPressed: () => appState.setMultiple(5),
-                    child: const Text("coefficient 5")),
-              ],
+        body: Stack(children: <Widget>[
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/background.jpg"),
+                fit: BoxFit.cover,
+              ),
             ),
-            BigCard(pair: pair),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                    onPressed: () {
-                      appState.getMultiple();
-                    },
-                    child: const Text("Multiplication")),
-                const SizedBox(width: 10),
-                ElevatedButton(
-                    onPressed: () {
-                      appState.getDivivsion();
-                    },
-                    child: const Text("Division")),
-              ],
-            )
-          ],
-        )));
+          ),
+          Center(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                      onPressed: () => appState.setMultiple(2),
+                      child: const Text("coefficient 2")),
+                  const SizedBox(width: 5),
+                  ElevatedButton(
+                      onPressed: () => appState.setMultiple(3),
+                      child: const Text("coefficient 3")),
+                  const SizedBox(width: 5),
+                  ElevatedButton(
+                      onPressed: () => appState.setMultiple(5),
+                      child: const Text("coefficient 5")),
+                ],
+              ),
+              BigCard(pair: pair),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        appState.getMultiple();
+                      },
+                      child: const Text("Multiplication")),
+                  const SizedBox(width: 10),
+                  ElevatedButton(
+                      onPressed: () {
+                        appState.getDivivsion();
+                      },
+                      child: const Text("Division")),
+                ],
+              )
+            ],
+          ))
+        ]));
   }
 }
 
