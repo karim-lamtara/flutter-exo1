@@ -1,19 +1,15 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  build(_) {
     return ChangeNotifierProvider(
-      create: (context) => MyAppState(),
+      create: (_) => MyChangeNotifier(),
       child: MaterialApp(
         title: 'First exo',
         theme: ThemeData(
@@ -27,7 +23,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyAppState extends ChangeNotifier {
+class MyChangeNotifier extends ChangeNotifier {
   int current = 1;
   int multiplicateur = 2;
 
@@ -54,10 +50,10 @@ class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
+  build(context) {
+    final appState = context.watch<MyChangeNotifier>();
     int pair = appState.current;
-    var theme = Theme.of(context);
+    final theme = Theme.of(context);
 
     return Scaffold(
         appBar: AppBar(
@@ -73,21 +69,15 @@ class MyHomePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                    onPressed: () {
-                      appState.setMultiple(2);
-                    },
+                    onPressed: () => appState.setMultiple(2),
                     child: const Text("coefficient 2")),
                 const SizedBox(width: 5),
                 ElevatedButton(
-                    onPressed: () {
-                      appState.setMultiple(3);
-                    },
+                    onPressed: () => appState.setMultiple(3),
                     child: const Text("coefficient 3")),
                 const SizedBox(width: 5),
                 ElevatedButton(
-                    onPressed: () {
-                      appState.setMultiple(5);
-                    },
+                    onPressed: () => appState.setMultiple(5),
                     child: const Text("coefficient 5")),
               ],
             ),
@@ -116,16 +106,16 @@ class MyHomePage extends StatelessWidget {
 
 class BigCard extends StatelessWidget {
   const BigCard({
-    Key? key,
+    super.key,
     required this.pair,
-  }) : super(key: key);
+  });
 
   final int pair;
 
   @override
-  Widget build(BuildContext context) {
-    var theme = Theme.of(context);
-    var style = theme.textTheme.displayLarge!.copyWith(
+  build(context) {
+    final theme = Theme.of(context);
+    final style = theme.textTheme.displayLarge!.copyWith(
       color: theme.colorScheme.onPrimary,
       backgroundColor: theme.colorScheme.secondary,
     );
