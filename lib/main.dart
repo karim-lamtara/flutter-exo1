@@ -27,6 +27,13 @@ class MyChangeNotifier extends ChangeNotifier {
   int current = 1;
   int multiplicateur = 2;
 
+  final Color stylePressed = const Color.fromARGB(255, 235, 181, 99);
+  final Color styleNotPressed = Color.fromARGB(255, 100, 193, 236);
+
+  late Color buttonColor1 = stylePressed;
+  late Color buttonColor2 = styleNotPressed;
+  late Color buttonColor3 = styleNotPressed;
+
   void getMultiple() {
     current = current * multiplicateur;
     notifyListeners();
@@ -44,6 +51,31 @@ class MyChangeNotifier extends ChangeNotifier {
     this.multiplicateur = multiplicateur;
     notifyListeners();
   }
+
+  void refrecheStyleButton(int coef) {
+    if (coef == 2) {
+      buttonColor1 = stylePressed;
+      buttonColor2 = styleNotPressed;
+      buttonColor3 = styleNotPressed;
+    }
+    if (coef == 3) {
+      buttonColor1 = styleNotPressed;
+      buttonColor2 = stylePressed;
+      buttonColor3 = styleNotPressed;
+    }
+    if (coef == 5) {
+      buttonColor1 = styleNotPressed;
+      buttonColor2 = styleNotPressed;
+      buttonColor3 = stylePressed;
+    }
+    notifyListeners();
+  }
+
+  Color getButtonColor(int coef) {
+    if (coef == 2) return buttonColor1;
+    if (coef == 3) return buttonColor2;
+    return buttonColor3;
+  }
 }
 
 class MyHomePage extends StatelessWidget {
@@ -52,7 +84,7 @@ class MyHomePage extends StatelessWidget {
   @override
   build(context) {
     final appState = context.watch<MyChangeNotifier>();
-    int pair = appState.current;
+    late int pair = appState.current;
     final theme = Theme.of(context);
 
     return Scaffold(
@@ -77,17 +109,26 @@ class MyHomePage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ElevatedButton(
-                      onPressed: () => appState.setMultiple(2),
-                      child: const Text("coefficient 2")),
+                  Buttonwidget(
+                      appState: appState,
+                      styleNotPressed: appState.styleNotPressed,
+                      stylePressed: appState.stylePressed,
+                      coef: 2,
+                      text: "coefficient 2"),
                   const SizedBox(width: 5),
-                  ElevatedButton(
-                      onPressed: () => appState.setMultiple(3),
-                      child: const Text("coefficient 3")),
+                  Buttonwidget(
+                      appState: appState,
+                      styleNotPressed: appState.styleNotPressed,
+                      stylePressed: appState.stylePressed,
+                      coef: 3,
+                      text: "coefficient 3"),
                   const SizedBox(width: 5),
-                  ElevatedButton(
-                      onPressed: () => appState.setMultiple(5),
-                      child: const Text("coefficient 5")),
+                  Buttonwidget(
+                      appState: appState,
+                      styleNotPressed: appState.styleNotPressed,
+                      stylePressed: appState.stylePressed,
+                      coef: 5,
+                      text: "coefficient 5"),
                 ],
               ),
               BigCard(pair: pair),
@@ -111,6 +152,41 @@ class MyHomePage extends StatelessWidget {
             ],
           ))
         ]));
+  }
+}
+
+class Buttonwidget extends StatelessWidget {
+  const Buttonwidget({
+    super.key,
+    required this.appState,
+    required this.styleNotPressed,
+    required this.stylePressed,
+    required this.coef,
+    required this.text,
+  });
+
+  final MyChangeNotifier appState;
+  final Color styleNotPressed;
+  final Color stylePressed;
+  final int coef;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: appState.getButtonColor(coef),
+      child: InkWell(
+          child: Container(
+            width: 100,
+            height: 30,
+            alignment: Alignment.center,
+            child: Text(text),
+          ),
+          onTap: () {
+            appState.setMultiple(coef);
+            appState.refrecheStyleButton(coef);
+          }),
+    );
   }
 }
 
