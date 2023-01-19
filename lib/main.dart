@@ -110,25 +110,13 @@ class MyHomePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Buttonwidget(
-                      appState: appState,
-                      styleNotPressed: appState.styleNotPressed,
-                      stylePressed: appState.stylePressed,
-                      coef: 2,
-                      text: "coefficient 2"),
+                      appState: appState, coef: 2, text: "coefficient 2"),
                   const SizedBox(width: 5),
                   Buttonwidget(
-                      appState: appState,
-                      styleNotPressed: appState.styleNotPressed,
-                      stylePressed: appState.stylePressed,
-                      coef: 3,
-                      text: "coefficient 3"),
+                      appState: appState, coef: 3, text: "coefficient 3"),
                   const SizedBox(width: 5),
                   Buttonwidget(
-                      appState: appState,
-                      styleNotPressed: appState.styleNotPressed,
-                      stylePressed: appState.stylePressed,
-                      coef: 5,
-                      text: "coefficient 5"),
+                      appState: appState, coef: 5, text: "coefficient 5"),
                 ],
               ),
               BigCard(pair: pair),
@@ -159,15 +147,11 @@ class Buttonwidget extends StatelessWidget {
   const Buttonwidget({
     super.key,
     required this.appState,
-    required this.styleNotPressed,
-    required this.stylePressed,
     required this.coef,
     required this.text,
   });
 
   final MyChangeNotifier appState;
-  final Color styleNotPressed;
-  final Color stylePressed;
   final int coef;
   final String text;
 
